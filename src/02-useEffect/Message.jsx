@@ -1,19 +1,41 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export const Message = () => {
 
+    //NOTA NUNCA SE DEBE DE ACTUALIZAR EL ESTADO DE UN COMPONENTE QUE YA NO ESTA MONTADO, RENDERIZANDO EN PANTALLA
+    const [coords, setCoords] = useState({ x: 0, y: 0 });
+
     useEffect(() => {
-      console.log('Message Mounted');
-    
-      return () => { // la parte del retorno del useEffect sirve para limpiar, eliminar o desmontar este componete de la vista inicial, siempre y cuando este no se estre renderizando en pantalla, es decir por ejemplo si se hace esto en la vista donde los vallamos a usar: ( username === 'strider2' ) && <Message />, en el momento en el que no se cumple la condición el return del useEffect de Message se ejecutara y lo eliminara del dom
-        console.log('Message Unmounted');  // con este return desmontamos el componente, es decir los destruimos, no quedaria invisible sino que se eliminaria del dom
+
+        const onMouseMove = ({ x, y }) => {
+            const coords = { x, y };
+            console.log( coords );
+            setCoords( coords );  // SI NO HUBIERA UN RETURN ESTO SERIA UN ERROR EN VERSIONES MENORES EN REACT 18 YA QUE NO SE PUEDE CAMBIAR EL STATE DE UN COMPONENTE QUE NO ESTA MONTADO
+        }
+
+        // Cuando el componente se monta voy a crear el listener mosemove y lo voy a apuntar a la funcion onMouseMove
+        window.addEventListener( 'mousemove', onMouseMove );
+
+        /* window.addEventListener( 'mousemove', ({ x, y }) => {  // Si no se coloca el return nunca se detendra este evento y cada que se muestre este componente se le colocara otra evento onMouse
+            console.log(x, y);
+        }); */
+
+      return () => {
+
+        // Quiero remover el evento mousemove y la referencia a la función que quiero eliminar
+        window.removeEventListener( 'mousemove', onMouseMove );
+
+        // Para remover un evento tenemos que apuntar a un elemento referenciado en memoria, no funcionaria si apuntamos a la funcion () => {} directamente ya que estariamos creando una nueva espacio en memoria y nunca seria el mismo espacio en memoria, si arriba referenciaramos a la funcion con un () => {} y abajo con la constante onMouseMove estos nos son iguales ya que los dos espacios en memoria son muy diferentes, para poder removerse la funcion tenemos que hacer referencia a la misma función y su espacio en memoria debe de coinsidir por eso se debe de hacer referencia.
+
       }
-    }, [])  // Para que solo se ejecute una sola vez
+    }, [])
     
 
     return (
         <>
             <h3>Usuario ya existe</h3>
+
+            { JSON.stringify( coords ) }
         </>
     );
 };
