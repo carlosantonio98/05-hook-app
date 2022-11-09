@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { Message } from './Message';
 
 export const SimpleForm = () => {
 
     const [formState, setFormState] = useState({
-        username: 'pedro',
+        username: 'strider',
         email: 'pedro@google.com'
     });
 
@@ -22,15 +23,15 @@ export const SimpleForm = () => {
     // cada que el componente es redibujado, nuestro useEffect es disparado
     // Dos efectos diferentes cada uno tiene su propia responsabilidad y eso es recomendado
     useEffect(() => {
-        console.log('useEffect called!');
+        // console.log('useEffect called!');
     }, []);
     
     useEffect(() => {
-        console.log('formState changed!');
+        // console.log('formState changed!');
     }, [formState]);
     
     useEffect(() => {
-        console.log('email changed!');
+        // console.log('email changed!');
     }, [email]);
 
     return (
@@ -55,6 +56,10 @@ export const SimpleForm = () => {
                 value={ email }
                 onChange={ onInputChange }
             />
+
+            {
+                ( username === 'strider2' ) && <Message />
+            }
         </>
     );
 }
