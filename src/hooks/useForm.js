@@ -13,9 +13,14 @@ export const useForm = ( initialForm ) => {
         });
     }
 
+    const onResetForm = () => {
+        setFormState( initialForm );
+    }
+
     return {
         ...formState,  // mandamos todas las propiedades del objeto formState desestructurados
         formState,
-        onInputChange
+        onInputChange,
+        onResetForm
     };
 }
