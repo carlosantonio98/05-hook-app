@@ -19,15 +19,24 @@ export const useFetch = ( url ) => {
             isLoading: true
         });
 
-        const resp = await fetch( url );
-        const data = await resp.json();
+        // Hacemos un try catch para cachar el error
+        try {
+            const resp = await fetch( url );
+            const data = await resp.json();
+    
+            // Si mando el setState a un objeto tengo que mandar todas las propiedades
+            setState({
+                data,
+                isLoading: false,
+                hasError: null
+            });
 
-        // Si mando el setState a un objeto tengo que mandar todas las propiedades
-        setState({
-            data,
-            isLoading: false,
-            hasError: null
-        });
+        } catch (error) {
+            setState({
+                ...setState,
+                hasError: error
+            });
+        }
     }
 
     useEffect(() => {
