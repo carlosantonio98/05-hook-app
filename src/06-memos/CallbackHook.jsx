@@ -8,16 +8,19 @@ export const CallbackHook = () => {
     // useCallback devolverá una versión memorizada de la  funcion(callback) que solo cambia si una de las entradas ha cambiado. 
 
     // uso comun
-    const incrementFather = useCallback(() => {  // funcion memorizada
-        setCounter( (value) => value + 1 );
-    }, []);  // va a cambiar solo una vez, cuando este sea montado
+    const incrementFather = useCallback(
+        (value) => {  // funcion memorizada con argumentos
+            setCounter( (c) => c + value );
+        }, 
+        []
+    );  // va a cambiar solo una vez, cuando este sea montado
 
 
     // Si nosotros mandaramos a llamar la función incrementFather y no tuvieramos el useMemo, para este efecto esta función siempre seria diferente y cada vez que cambie el estado se haria este efecto y causaria un ciclo infinito, esto sucede porque estas funciones a como los objetos siempre apuntan a un espacio en memoria diferente.
 
     // otro uso: cuando la funcion cambie que dispare un efecto
     useEffect(() => {
-        incrementFather()  // se va a disparar la funcion cuando cambie el padre o la función
+        incrementFather( 5 )  // se va a disparar la funcion cuando cambie el padre o la función
     }, [incrementFather]);
 
     /* const incrementFather = () => {
