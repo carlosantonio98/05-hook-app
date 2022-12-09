@@ -1,5 +1,5 @@
-import { useReducer } from 'react'
-import { todoReducer } from './todoReducer';
+import { useReducer } from 'react';
+import { TodoList, TodoAdd, todoReducer } from './';
 
 const initialState = [
     {
@@ -22,6 +22,10 @@ export const TodoApp = () => {
     // la parte del state usualmente se le coloca el nombre de lo que devuelve en este caso en nuestros todos
     // la parte del dispatch usualmente se llama así cuando solo tenemos un reducer, si nosotros tenemos más de un reducer en el mismo functional component nosotros le podemos poner dispatchTodoAction o dispatchTodo para indicar de que esto es la función que despacha acciones hacia ese reducer en particular, pero si solo tenemos un reducer usualmente le podemos dejar dispatch porque sabe que solo hace referencia a este de aquí
 
+    const handleNewTodo = ( todo ) => {
+        console.log({ todo });
+    }
+
     return (
         <>
             <h1>TodoApp: 10 ,<small>pendientes: 2</small></h1>
@@ -29,36 +33,19 @@ export const TodoApp = () => {
 
             <div className="row">
                 <div className="col-7">
-                    <ul className="list-group">
-                       {
-                            todos.map( todo => (
-                                <li key={ todo.id } className="list-group-item d-flex justify-content-between">
-                                    <span className="align-self-center">Item 1</span>
-                                    <button className="btn btn-danger">Borrar</button>
-                                </li>
-                            ))
 
-                       }
-                    </ul>
+                    {/* TodoList */}
+                    <TodoList todos={ todos } />
+                    {/* TodoList */}
                 </div>
 
                 <div className="col-5">
                     <h4>Agregar TODO</h4>
                     <hr />
-                    <form>
-                        <input 
-                            type="text" 
-                            placeholder="¿Qué hay que hacer?"
-                            className="form-control"
-                        />
-
-                        <button 
-                            type="submit"
-                            className="btn btn-outline-primary mt-1"
-                        >
-                            Agregar
-                        </button>
-                    </form>
+                    
+                    {/* TodoAdd */}
+                    <TodoAdd onNewTodo={ handleNewTodo } />
+                    {/* TodoAdd */}
                 </div>
             </div>
 
