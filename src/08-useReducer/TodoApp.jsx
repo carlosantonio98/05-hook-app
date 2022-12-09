@@ -23,6 +23,13 @@ export const TodoApp = () => {
     // la parte del dispatch usualmente se llama así cuando solo tenemos un reducer, si nosotros tenemos más de un reducer en el mismo functional component nosotros le podemos poner dispatchTodoAction o dispatchTodo para indicar de que esto es la función que despacha acciones hacia ese reducer en particular, pero si solo tenemos un reducer usualmente le podemos dejar dispatch porque sabe que solo hace referencia a este de aquí
 
     const handleNewTodo = ( todo ) => {
+        const action = {
+            type: '[TODO] Add Todo',
+            payload: todo
+        }
+
+        dispatch( action );
+
         console.log({ todo });
     }
 
