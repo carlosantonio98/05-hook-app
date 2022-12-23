@@ -4,7 +4,7 @@ import { HomePage, AboutPage, LoginPage, Navbar } from '.';
 export const MainApp = () => {
     return (
         <>
-            <h1>Main app</h1>
+            {/* <h1>Main app</h1> */}
             <Navbar />
             <hr />
 
