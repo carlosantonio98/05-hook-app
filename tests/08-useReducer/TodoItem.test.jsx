@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { TodoItem } from "../../src/08-useReducer/TodoItem";
 
 describe('Pruebas en <TodoItem />', () => {
@@ -34,6 +34,58 @@ describe('Pruebas en <TodoItem />', () => {
         expect( spanElement.className ).not.toContain('text-decoration-line-through');
 
 
+    });
+    
+    test('Debe de mostrar el Todo completado', () => {
+
+        todo.done = true;
+
+        render( 
+            <TodoItem
+                todo={ todo }
+                onToggleTodo={ onToggleTodoMock }
+                onDeleteTodo={ onDeleteTodoMock }
+            /> 
+        );
+
+        const spanElement = screen.getByLabelText('span');
+        expect( spanElement.className ).toContain('text-decoration-line-through');
+
+    });
+
+    test('Span debe de llamar el ToggleTodo cuando se hace click', () => {
+
+        render( 
+            <TodoItem
+                todo={ todo }
+                onToggleTodo={ onToggleTodoMock }
+                onDeleteTodo={ onDeleteTodoMock }
+            /> 
+        );
+
+        const spanElement = screen.getByLabelText('span');
+        fireEvent.click( spanElement );
+
+        // asegura que la función ha sido llamado con argumentos en especifico
+        expect( onToggleTodoMock ).toHaveBeenCalledWith( todo.id );
+
+    });
+
+    test('Button debe de llamar el deleteTodo', () => {
+
+        render( 
+            <TodoItem
+                todo={ todo }
+                onToggleTodo={ onToggleTodoMock }
+                onDeleteTodo={ onDeleteTodoMock }
+            /> 
+        );
+
+        // Si tuvieramos mas de un boton lo correcto seria identificar el botón por el aria-label o por el test-id
+        const deleteButton = screen.getByRole('button');
+        fireEvent.click( deleteButton );
+
+        expect( onDeleteTodoMock ).toHaveBeenCalledWith( todo.id );
     });
 
 });
