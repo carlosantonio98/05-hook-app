@@ -24,6 +24,7 @@ export const FormWithCustomHook = () => {
                 name='username'
                 value={ username }
                 onChange={ onInputChange }
+                aria-label="username"
             />
 
             <input 
@@ -33,6 +34,7 @@ export const FormWithCustomHook = () => {
                 name='email'
                 value={ email }
                 onChange={ onInputChange }
+                aria-label="email"
             />
 
             <input 
@@ -42,6 +44,7 @@ export const FormWithCustomHook = () => {
                 name='password'
                 value={ password }
                 onChange={ onInputChange }
+                aria-label="password"
             />
 
             <button onClick={ onResetForm }  className='btn btn-primary mt-2'>Borrar</button>
