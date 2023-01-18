@@ -46,6 +46,7 @@ export const SimpleForm = () => {
                 name='username'
                 value={ username }
                 onChange={ onInputChange }
+                aria-label="username"
             />
             
             <input 
@@ -55,6 +56,7 @@ export const SimpleForm = () => {
                 name='email'
                 value={ email }
                 onChange={ onInputChange }
+                aria-label="email"
             />
 
             {
